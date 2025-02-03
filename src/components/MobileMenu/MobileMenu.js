@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import styled from 'styled-components/macro';
-import { DialogOverlay, DialogContent } from '@reach/dialog';
+import React from "react";
+import styled from "styled-components/macro";
+import { DialogOverlay, DialogContent } from "@reach/dialog";
 
-import { QUERIES, WEIGHTS } from '../../constants';
+import { WEIGHTS } from "../../constants";
 
-import UnstyledButton from '../UnstyledButton';
-import Icon from '../Icon';
-import VisuallyHidden from '../VisuallyHidden';
+import UnstyledButton from "../UnstyledButton";
+import Icon from "../Icon";
+import VisuallyHidden from "../VisuallyHidden";
 
 const MobileMenu = ({ isOpen, onDismiss }) => {
   return (
@@ -45,6 +45,19 @@ const Overlay = styled(DialogOverlay)`
   background: var(--color-backdrop);
   display: flex;
   justify-content: flex-end;
+  --fade-in-duration: 300ms;
+  animation: fadeIn var(--fade-in-duration);
+  perspective: 1500px;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 const Content = styled(DialogContent)`
@@ -54,6 +67,29 @@ const Content = styled(DialogContent)`
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+  //animation: slideIn 1500ms cubic-bezier(0,1.18,.98,.99);
+  animation: slideIn 500ms ease-out;
+  animation-delay: var(--fade-in-duration);
+  animation-fill-mode: backwards;
+
+  transform-origin: right;
+
+  @keyframes slideIn {
+    0% {
+      //transform: translateX(100%);
+      transform: rotate3d(0, 1, 0, -90deg);
+      opacity: 0;
+    }
+    
+    10% {
+      opacity: 1;
+    }
+
+    100% {
+      //transform: translateX(0);
+      transform: rotate3d(0, 1, 0, 0);
+    }
+  }
 `;
 
 const CloseButton = styled(UnstyledButton)`
