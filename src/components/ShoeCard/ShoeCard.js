@@ -70,13 +70,24 @@ const ShoeCard = ({
 
 const Wrapper = styled.article``;
 
+const Link = styled.a`
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+`;
+
 const Image = styled.img`
   display: block;
   width: 100%;
   // the transition when hovering-out takes 600ms
   transition: transform 600ms;
   transform-origin: 50% 80%;
-`;
+
+  ${Link}:is(:hover,:focus) & {
+    // the transition when hovering-in takes 300ms
+    transition-duration: 300ms;
+    transform: scale(1.1);
+  }`;
 
 const ImageWrapper = styled.div`
   overflow: hidden;
@@ -121,19 +132,7 @@ const Flag = styled.div`
   font-weight: ${WEIGHTS.bold};
   color: var(--color-white);
   border-radius: 2px;
-`;
 
-const SaleFlag = styled(Flag)`
-  background-color: var(--color-primary);
-`;
-const NewFlag = styled(Flag)`
-  background-color: var(--color-secondary);
-`;
-
-const Link = styled.a`
-  text-decoration: none;
-  color: inherit;
-  position: relative;
 
   @keyframes tumble {
     0% {
@@ -153,15 +152,15 @@ const Link = styled.a`
     }
   }
 
-  :hover ${Image}, :focus ${Image} {
-    // the transition when hovering-in takes 300ms
-    transition-duration: 300ms;
-    transform: scale(1.1);
-  }
-
-  :hover ${Flag}, :focus ${Flag} {
+  ${Link}:is(:hover,:focus) & {
     animation: tumble 500ms;
-  }
+  }`;
+
+const SaleFlag = styled(Flag)`
+  background-color: var(--color-primary);
+`;
+const NewFlag = styled(Flag)`
+  background-color: var(--color-secondary);
 `;
 
 export default ShoeCard;
