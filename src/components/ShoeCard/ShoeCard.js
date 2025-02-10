@@ -34,15 +34,13 @@ const ShoeCard = ({
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
-        <ImageAndPriceWrapper>
-          <ImageWrapper>
-            <Image alt="" src={imageSrc} />
-            {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
-            {variant === 'new-release' && (
-              <NewFlag>Just released!</NewFlag>
-            )}
-          </ImageWrapper>
-        </ImageAndPriceWrapper>
+        <ImageWrapper>
+          <Image alt="" src={imageSrc} />
+        </ImageWrapper>
+        {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
+        {variant === 'new-release' && (
+          <NewFlag>Just released!</NewFlag>
+        )}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
@@ -70,11 +68,6 @@ const ShoeCard = ({
   );
 };
 
-const Link = styled.a`
-  text-decoration: none;
-  color: inherit;
-`;
-
 const Wrapper = styled.article``;
 
 const Image = styled.img`
@@ -83,12 +76,12 @@ const Image = styled.img`
   // the transition when hovering-out takes 600ms
   transition: transform 600ms;
   transform-origin: 50% 80%;
-  
-  :hover {
-    // the transition when hovering-in takes 300ms
-    transition-duration: 300ms;
-    transform: scale(1.1);
-  }
+`;
+
+const ImageWrapper = styled.div`
+  overflow: hidden;
+  border-radius: 16px 16px 4px 4px;
+  margin-bottom: 4px;
 `;
 
 const Row = styled.div`
@@ -137,34 +130,36 @@ const NewFlag = styled(Flag)`
   background-color: var(--color-secondary);
 `;
 
-const ImageAndPriceWrapper = styled.div`
+const Link = styled.a`
+  text-decoration: none;
+  color: inherit;
   position: relative;
-  margin-bottom: 4px;
-`;
 
-const ImageWrapper = styled.div`
-  overflow: hidden;
-  border-radius: 16px 16px 4px 4px;
-  
   @keyframes tumble {
     0% {
       transform: rotate(0);
     }
-    
+
     25% {
       transform: rotate(-8deg);
     }
-    
+
     75% {
       transform: rotate(5deg);
     }
-    
+
     100% {
       transform: rotate(0);
     }
   }
-  
-  :hover ${Flag} {
+
+  :hover ${Image}, :focus ${Image} {
+    // the transition when hovering-in takes 300ms
+    transition-duration: 300ms;
+    transform: scale(1.1);
+  }
+
+  :hover ${Flag}, :focus ${Flag} {
     animation: tumble 500ms;
   }
 `;
