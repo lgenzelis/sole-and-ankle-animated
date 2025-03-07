@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import styled from "styled-components/macro";
+import styled, { keyframes } from 'styled-components/macro';
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 
 import { WEIGHTS } from "../../constants";
@@ -36,6 +36,16 @@ const MobileMenu = ({ isOpen, onDismiss }) => {
   );
 };
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
 const Overlay = styled(DialogOverlay)`
   position: fixed;
   top: 0;
@@ -46,17 +56,24 @@ const Overlay = styled(DialogOverlay)`
   display: flex;
   justify-content: flex-end;
   --fade-in-duration: 300ms;
-  animation: fadeIn var(--fade-in-duration);
+  animation: ${fadeIn} var(--fade-in-duration);
   perspective: 1500px;
+`;
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
+const slideIn = keyframes`
+  0% {
+    //transform: translateX(100%);
+    transform: rotate3d(0, 1, 0, -90deg);
+    opacity: 0;
+  }
 
-    to {
-      opacity: 1;
-    }
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    //transform: translateX(0);
+    transform: rotate3d(0, 1, 0, 0);
   }
 `;
 
@@ -67,29 +84,11 @@ const Content = styled(DialogContent)`
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
-  //animation: slideIn 1500ms cubic-bezier(0,1.18,.98,.99);
-  animation: slideIn 500ms ease-out;
+  //animation: ${slideIn} 1500ms cubic-bezier(0,1.18,.98,.99);
+  animation: ${slideIn} 500ms ease-out;
   animation-delay: var(--fade-in-duration);
   animation-fill-mode: backwards;
-
   transform-origin: right;
-
-  @keyframes slideIn {
-    0% {
-      //transform: translateX(100%);
-      transform: rotate3d(0, 1, 0, -90deg);
-      opacity: 0;
-    }
-    
-    10% {
-      opacity: 1;
-    }
-
-    100% {
-      //transform: translateX(0);
-      transform: rotate3d(0, 1, 0, 0);
-    }
-  }
 `;
 
 const CloseButton = styled(UnstyledButton)`

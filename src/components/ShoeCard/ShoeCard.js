@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components/macro';
 
 import { WEIGHTS } from '../../constants';
 import { formatPrice, pluralize, isNewShoe } from '../../utils';
@@ -120,6 +120,24 @@ const SalePrice = styled.span`
   color: var(--color-primary);
 `;
 
+const tumble = keyframes`
+  0% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(-8deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+`;
+
 const Flag = styled.div`
   position: absolute;
   top: 12px;
@@ -134,26 +152,8 @@ const Flag = styled.div`
   border-radius: 2px;
 
 
-  @keyframes tumble {
-    0% {
-      transform: rotate(0);
-    }
-
-    25% {
-      transform: rotate(-8deg);
-    }
-
-    75% {
-      transform: rotate(5deg);
-    }
-
-    100% {
-      transform: rotate(0);
-    }
-  }
-
   ${Link}:is(:hover,:focus) & {
-    animation: tumble 500ms;
+    animation: ${tumble} 500ms;
   }`;
 
 const SaleFlag = styled(Flag)`
