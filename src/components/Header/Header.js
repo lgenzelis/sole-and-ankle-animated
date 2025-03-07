@@ -10,10 +10,10 @@ import MobileMenu from "../MobileMenu";
 import VisuallyHidden from "../VisuallyHidden";
 
 const NavLinkAnimated = ({ href, children }) => (
-  <NavLinkWrapper>
-    <NavLink href={href}>{children}</NavLink>
-    <NavLinkBold href={href}>{children}</NavLinkBold>
-  </NavLinkWrapper>
+  <NavLink href={href}>
+    <NavText>{children}</NavText>
+    <NavTextBold aria-hidden>{children}</NavTextBold>
+  </NavLink>
 );
 
 const Header = () => {
@@ -121,38 +121,39 @@ const Filler = styled.div`
   }
 `;
 
-const NavLink = styled.a`
+const NavText = styled.div`
   font-size: 1.125rem;
   text-transform: uppercase;
-  text-decoration: none;
   font-weight: ${WEIGHTS.medium};
-  display: block;
   transition: transform 200ms;
   color: inherit;
 `;
 
-const NavLinkBold = styled(NavLink)`
+const NavTextBold = styled(NavText)`
   font-weight: ${WEIGHTS.bold};
   transform: translateY(100%);
   position: absolute;
   top: 0;
 `;
 
-const NavLinkWrapper = styled.div`
+const NavLink = styled.a`
   position: relative;
-  overflow: hidden;
+  text-decoration: none;
   color: var(--color-gray-900);
+  // We have two elements inside this anchor: the regular text (which is displayed by default) and the bold text 
+  // (displayed when the user hovers or focuses the anchor). We set overflow to hidden to hide the corresponding text.
+  overflow: hidden;
 
   &:first-of-type {
     color: var(--color-secondary);
   }
 
-  :hover {
-    ${NavLink} {
+  :hover, :focus {
+    ${NavText} {
       transform: translateY(-100%);
     }
 
-    ${NavLinkBold} {
+    ${NavTextBold} {
       transform: translateY(0%);
     }
   }
